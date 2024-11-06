@@ -27,6 +27,7 @@ class QuotesController < ApplicationController
       if @quote.save
         format.html { redirect_to quotes_path, notice: "Quote was successfully created." }
         format.json { render :show, status: :created, location: @quote }
+        format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @quote.errors, status: :unprocessable_entity }
