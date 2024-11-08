@@ -42,9 +42,8 @@ class QuotesController < ApplicationController
   def update
     respond_to do |format|
       if @quote.update(quote_params)
-        format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
+        format.html { redirect_to quotes_path, notice: 'Quote was successfully updated.' }
         format.json { render :show, status: :ok, location: @quote }
-        format.turbo_stream
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @quote.errors, status: :unprocessable_entity }
