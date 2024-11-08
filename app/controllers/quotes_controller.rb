@@ -8,7 +8,7 @@ class QuotesController < ApplicationController
 
   # GET /quotes or /quotes.json
   def index
-    @quotes = Quote.all
+    @quotes = Quote.ordered
   end
 
   # GET /quotes/1 or /quotes/1.json
@@ -30,6 +30,7 @@ class QuotesController < ApplicationController
       if @quote.save
         format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
         format.json { render :show, status: :created, location: @quote }
+        format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @quote.errors, status: :unprocessable_entity }
@@ -41,7 +42,7 @@ class QuotesController < ApplicationController
   def update
     respond_to do |format|
       if @quote.update(quote_params)
-        format.html { redirect_to @quote, notice: 'Quote was successfully updated.' }
+        format.html { redirect_to quotes_path, notice: 'Quote was successfully updated.' }
         format.json { render :show, status: :ok, location: @quote }
       else
         format.html { render :edit, status: :unprocessable_entity }
