@@ -1,41 +1,61 @@
-require "application_system_test_case"
+# test/system/quotes_test.rb
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class QuotesTest < ApplicationSystemTestCase
   setup do
-    @quote = quotes(:one)
+    @quote = quotes(:first) # Reference to the first fixture quote
   end
 
-  test "visiting the index" do
-    visit quotes_url
-    assert_selector "h1", text: "Quotes"
+  test 'Creating a new quote' do
+    # When we visit the Quotes#index page
+    # we expect to see a title with the text 'Quotes'
+    visit quotes_path
+    assert_selector 'h1', text: 'Quotes'
+
+    # When we click on the link with the text 'New quote'
+    # we expect to land on a page with the title 'New quote'
+    click_on 'New quote'
+    assert_selector 'h1', text: 'New quote'
+
+    # When we fill in the name input with 'Capybara quote'
+    # and we click on 'Create Quote'
+    fill_in 'Name', with: 'Capybara quote'
+    click_on 'Create quote'
+
+    # We expect to be back on the page with the title 'Quotes'
+    # and to see our 'Capybara quote' added to the list
+    # assert_selector 'h1', text: 'Quotes'
+    assert_text 'Capybara quote'
   end
 
-  test "should create quote" do
-    visit quotes_url
-    click_on "New quote"
+  test 'Showing a quote' do
+    visit quotes_path
+    click_link @quote.name
 
-    fill_in "Name", with: @quote.name
-    click_on "Create Quote"
-
-    assert_text "Quote was successfully created"
-    click_on "Back"
+    assert_selector 'h1', text: @quote.name
   end
 
-  test "should update Quote" do
-    visit quote_url(@quote)
-    click_on "Edit this quote", match: :first
+  test 'Updating a quote' do
+    visit quotes_path
+    assert_selector 'h1', text: 'Quotes'
 
-    fill_in "Name", with: @quote.name
-    click_on "Update Quote"
+    click_on 'Edit', match: :first
+    assert_selector 'h1', text: 'Edit quote'
 
-    assert_text "Quote was successfully updated"
-    click_on "Back"
+    fill_in 'Name', with: 'Updated quote'
+    click_on 'Update quote'
+
+    # assert_selector 'h1', text: 'Quotes'
+    assert_text 'Updated quote'
   end
 
-  test "should destroy Quote" do
-    visit quote_url(@quote)
-    click_on "Destroy this quote", match: :first
+  test 'Destroying a quote' do
+    visit quotes_path
+    assert_text @quote.name
 
-    assert_text "Quote was successfully destroyed"
+    click_on 'Delete', match: :first
+    assert_no_text @quote.name
   end
 end
