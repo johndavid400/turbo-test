@@ -72,3 +72,7 @@ end
 
 gem "simple_form", "~> 5.1.0"
 
+gem 'graphql'
+gem "graphiql-rails", group: :development
+
+gem 'pry-rails'
