@@ -21,11 +21,6 @@ module Api
       def set_quote
         @quote = Quote.find(params[:id])
       end
-
-      # Only allow a list of trusted parameters through.
-      def quote_params
-        params.require(:quote).permit(:name)
-      end
     end
   end
 end
