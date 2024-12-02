@@ -4,8 +4,8 @@ class Mutations::CreateQuote < Mutations::BaseMutation
   field :quote, Types::QuoteType, null: false
   field :errors, [String], null: false
 
-  def resolve(name)
-    quote = Quote.new(name)
+  def resolve(name:)
+    quote = Quote.new(name: name)
 
     if quote.save
       { quote: quote, errors: [] }
