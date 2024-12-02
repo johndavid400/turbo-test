@@ -45,5 +45,21 @@ module Types
     def quote(id:)
       Quote.find(id)
     end
+
+    # get all users
+    field :users, [UserType], null: false, description: 'Test User query'
+
+    def users
+      User.all
+    end
+
+    # Get a user by id
+    field :user, Types::UserType, null: false do
+      argument :id, ID, required: true
+    end
+
+    def user(id:)
+      User.find(id)
+    end
   end
 end
