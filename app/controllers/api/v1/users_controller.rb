@@ -1,4 +1,4 @@
-# app/controllers/quotes_controller.rb
+# app/controllers/users_controller.rb
 # frozen_string_literal: true
 
 module Api
@@ -7,13 +7,13 @@ module Api
     # reading users in format JSON.
     class UsersController < Api::ApiController
       before_action :set_user, only: %i[show]
-      # GET /quotes or /quotes.json
+      # GET /users.json
       def index
         @users = User.all
         render json: @users
       end
 
-      # GET /quotes/1 or /quotes/1.json
+      # GET /users/1.json
       def show
         render json: @user
       end
