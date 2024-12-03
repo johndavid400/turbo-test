@@ -75,3 +75,6 @@ gem "simple_form", "~> 5.1.0"
 
 gem "devise", "~> 4.9"
 gem 'pry-rails'
+
+gem "graphql", "~> 2.4"
+gem "graphiql-rails", group: :development
