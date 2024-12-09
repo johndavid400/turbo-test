@@ -12,12 +12,13 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
-      # current_user: current_user,
+      current_user_from_token: current_user_from_token
     }
     result = QuoteEditorSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
+
     handle_error_in_development(e)
   end
 
@@ -48,5 +49,13 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def current_user_from_token
+    token = request.headers['Authorization'].to_s.split(' ').last
+    return unless token
+
+    decoded_token = JWT.decode(token, 'serllessecretcode', true, algorithm: 'HS256')
+    User.find(decoded_token[0]['user_id'])
   end
 end

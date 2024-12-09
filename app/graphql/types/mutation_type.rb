@@ -11,5 +11,6 @@ module Types
 
     field :create_quote, mutation: Mutations::CreateQuote
     field :create_user, mutation: Mutations::CreateUser
+    field :login, mutation: Mutations::Login
   end
 end
