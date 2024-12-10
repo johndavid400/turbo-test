@@ -36,5 +36,13 @@ module Types
       Quote.all
     end
 
+    # create user query
+
+    field :users, [Types::UserType], null: false, description: "users"
+
+    def users
+      User.all
+    end
+
   end
 end

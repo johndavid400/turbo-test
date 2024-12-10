@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 module Types
-  class QuoteType < Types::BaseObject
+  class ApiKeyType < Types::BaseObject
     field :id, ID, null: false
-    field :name, String
+    #field :token, String
+    #field :secret, String
+    field :deleted_at, GraphQL::Types::ISO8601DateTime
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :user_id, Integer, null: false
