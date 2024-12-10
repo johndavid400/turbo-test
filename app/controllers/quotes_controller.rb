@@ -1,4 +1,5 @@
 class QuotesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_quote, only: %i[ show edit update destroy ]
 
   # GET /quotes or /quotes.json
@@ -12,7 +13,7 @@ class QuotesController < ApplicationController
 
   # GET /quotes/new
   def new
-    @quote = Quote.new
+    @quote = current_user.quotes.new
   end
 
   # GET /quotes/1/edit
@@ -21,7 +22,7 @@ class QuotesController < ApplicationController
 
   # POST /quotes or /quotes.json
   def create
-    @quote = Quote.new(quote_params)
+    @quote = current_user.quotes.new(quote_params)
 
     respond_to do |format|
       if @quote.save

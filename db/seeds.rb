@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+user = User.create(email: "test@test.com", password: "password", password_confirmation: "password")
+
+user.api_keys.create
+
+%w(Foo Bar Baz Word Sup).each do |name|
+  user.quotes.create(name: name)
+end
