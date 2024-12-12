@@ -71,5 +71,8 @@ group :test do
 end
 
 gem 'devise'
+gem 'graphiql-rails', group: :development
+gem 'graphql'
 gem 'pry'
 gem 'simple_form', '~> 5.1.0'
+gem 'jwt'
