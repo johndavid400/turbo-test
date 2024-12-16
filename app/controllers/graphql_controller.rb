@@ -5,6 +5,7 @@ class GraphqlController < ApplicationController
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
+  before_action :check_jwt
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -49,4 +50,18 @@ class GraphqlController < ApplicationController
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
+
+  def check_jwt
+    # skip auth for Introspection query
+    return if params[:operationName] == "IntrospectionQuery"
+
+    @user = JWT.decode(token, HMAC_SECRET, true, {algorithm: 'HS256'})
+  rescue => e
+    render json: {error: 'Invalid JWT'}, status: :unauthorized
+  end
+
+  def token
+    @token ||= request.headers['Authorization'].split(' ').last
+  end
+
 end

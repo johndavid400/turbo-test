@@ -78,3 +78,4 @@ gem 'pry-rails'
 
 gem "graphql", "~> 2.4"
 gem "graphiql-rails", group: :development
+gem 'jwt'

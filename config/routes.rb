@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :quotes, only: [:index, :show]
       resources :users, only: [:index, :show]
+      post :auth, to: 'auth#create'
     end
   end
 
